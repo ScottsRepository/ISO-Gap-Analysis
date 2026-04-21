@@ -43,7 +43,6 @@ const resultsSection = document.getElementById('results-section');
 const standardSelect = document.getElementById('standard-select');
 const aiModelSelect = document.getElementById('ai-model-select');
 
-// Toggle AI fields
 standardSelect.addEventListener('change', (e) => {
     const aiContext = document.getElementById('ai-context');
     aiContext.classList.toggle('hidden', e.target.value !== '42001');
@@ -56,11 +55,9 @@ aiModelSelect.addEventListener('change', (e) => {
 
 document.getElementById('start-btn').addEventListener('click', () => {
     currentStandard = standardSelect.value;
-    
     if (currentStandard === "27701") {
         alert("Note: ISO 27701 is an extension. You must have ISO 27001 in place or be implementing it simultaneously.");
     }
-
     setupSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
     showQuestion();
@@ -71,7 +68,6 @@ function showQuestion() {
     const q = questions[currentStep];
     document.getElementById('pillar-title').innerText = q.p;
     document.getElementById('question-text').innerText = q.q;
-    
     const progress = (currentStep / questions.length) * 100;
     document.getElementById('progress-bar').style.width = progress + "%";
 }
@@ -79,7 +75,6 @@ function showQuestion() {
 function handleAnswer(score) {
     scores.push(score);
     const questions = questionBank[currentStandard];
-    
     if (currentStep < questions.length - 1) {
         currentStep++;
         showQuestion();
@@ -91,14 +86,11 @@ function handleAnswer(score) {
 function calculateResults() {
     quizSection.classList.add('hidden');
     resultsSection.classList.remove('hidden');
-    
     const total = scores.reduce((a, b) => a + b, 0);
     const max = scores.length * 2;
     const ratio = total / max;
-
     let resultColor = "red-bg";
     let text = "<strong>Status: Red.</strong> You appear to be operating on 'tribal knowledge.' This creates risk and makes scaling difficult. We recommend a structured gap analysis.";
-
     if (ratio > 0.8) {
         resultColor = "green-bg";
         text = "<strong>Status: Green.</strong> You have strong foundations in place. You are likely ready for a formal pre-audit or certification push.";
@@ -106,11 +98,11 @@ function calculateResults() {
         resultColor = "amber-bg";
         text = "<strong>Status: Amber.</strong> You have the basics, but there are gaps in your formal evidence. Most SMEs fall into this category before partnering with us.";
     }
-
     document.getElementById('traffic-light-indicator').className = `light ${resultColor}`;
     document.getElementById('results-content').innerHTML = `<p>${text}</p>`;
     
+    // Updated Email logic
     const mailSubject = `ISO ${currentStandard} Gap Analysis Results`;
     const mailBody = `Hello Boo Consulting, I have completed the online gap analysis for ISO ${currentStandard}. My result was ${resultColor.split('-')[0].toUpperCase()}. I would like to discuss a roadmap.`;
-    document.getElementById('email-link').href = `mailto:info@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+    document.getElementById('email-link').href = `mailto:enquiries@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 }
