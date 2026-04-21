@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO Gap Analysis | Boo Consulting</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="assets/NLS Logo.jpeg" alt="Boo Consulting" class="logo">
+            <div class="tagline">Your Compliance Journey Starts Here</div>
+        </div>
+    </header>
 
+    <main class="container">
+        <section id="setup-section" class="card">
+            <h1>ISO Gap Analysis Tool</h1>
+            <p>Our gap analysis tool provides a snapshot of your current compliance status. Select a standard below to begin.</p>
+            
+            <div class="input-group">
+                <label for="standard-select">Select ISO Standard:</label>
+                <select id="standard-select">
+                    <option value="9001">ISO 9001 - Quality Management</option>
+                    <option value="27001">ISO 27001 - Information Security</option>
+                    <option value="27701">ISO 27701 - Privacy Information</option>
+                    <option value="14001">ISO 14001 - Environmental Management</option>
+                    <option value="42001">ISO 42001 - Artificial Intelligence</option>
+                </select>
+            </div>
+
+            <div id="ai-context" class="input-group hidden">
+                <label for="ai-model">Which AI models do you currently use?</label>
+                <select id="ai-model">
+                    <option value="chatgpt">ChatGPT / OpenAI</option>
+                    <option value="gemini">Google Gemini</option>
+                    <option value="claude">Claude / Anthropic</option>
+                    <option value="copilot">Microsoft Copilot</option>
+                    <option value="custom">Custom / In-house LLM</option>
+                </select>
+                <input type="text" id="custom-ai" placeholder="If custom, please specify..." class="hidden">
+            </div>
+
+            <button id="start-btn" class="btn-primary">Begin Snapshot</button>
+        </section>
+
+        <section id="quiz-section" class="card hidden">
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <h2 id="pillar-title">Section</h2>
+            <p id="question-text"></p>
+            <div class="answer-options">
+                <button onclick="handleAnswer(2)" class="btn-answer">Yes, fully in place</button>
+                <button onclick="handleAnswer(1)" class="btn-answer">Partially / In progress</button>
+                <button onclick="handleAnswer(0)" class="btn-answer">No, not yet</button>
+            </div>
+        </section>
+
+        <section id="results-section" class="card hidden">
+            <h2>Your Results Summary</h2>
+            <div class="traffic-light-outer">
+                <div id="traffic-light-indicator" class="light"></div>
+            </div>
+            <div id="results-content"></div>
+            <div class="cta-area">
+                <a id="email-link" href="#" class="btn-primary">Request Detailed Roadmap</a>
+                <button onclick="location.reload()" class="btn-link">Restart Analysis</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
