@@ -19,7 +19,7 @@ body {
 }
 
 .header-container {
-    padding: 40px 20px; /* Bx2 clear space */
+    padding: 40px 20px;
     text-align: center;
     background: var(--boo-white);
 }
@@ -135,7 +135,6 @@ select, input[type="text"] {
 
 .hidden { display: none; }
 
-/* Traffic Light Styling */
 .traffic-light-outer {
     width: 100px;
     height: 100px;
