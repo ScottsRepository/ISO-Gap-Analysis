@@ -1,4 +1,4 @@
-/* Brand Palette */
+/* Brand Palette from Guidelines */
 :root {
     --boo-orange: #f39200;
     --boo-dark: #212322;
@@ -19,7 +19,7 @@ body {
 }
 
 .header-container {
-    padding: 40px 20px; /* Bx2 Clear Space */
+    padding: 40px 20px; /* Bx2 clear space */
     text-align: center;
     background: var(--boo-white);
 }
@@ -34,6 +34,7 @@ body {
     color: var(--boo-orange);
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 700;
 }
 
 .container {
@@ -58,12 +59,14 @@ h1, h2, h3 {
 
 .input-group {
     margin: 25px 0;
+    text-align: left;
 }
 
 label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
+    color: var(--boo-dark);
 }
 
 select, input[type="text"] {
@@ -72,6 +75,7 @@ select, input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-family: 'Source Sans Pro', sans-serif;
+    box-sizing: border-box;
 }
 
 .btn-primary {
@@ -86,6 +90,11 @@ select, input[type="text"] {
     text-decoration: none;
     cursor: pointer;
     font-size: 1.1rem;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--boo-dark);
 }
 
 .btn-answer {
@@ -100,6 +109,7 @@ select, input[type="text"] {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 1rem;
     transition: all 0.2s;
+    border-radius: 4px;
 }
 
 .btn-answer:hover {
@@ -107,9 +117,25 @@ select, input[type="text"] {
     background: #fffcf5;
 }
 
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+#progress-bar {
+    height: 100%;
+    background: var(--boo-teal);
+    width: 0%;
+    transition: width 0.3s;
+}
+
 .hidden { display: none; }
 
-/* Results Styling */
+/* Traffic Light Styling */
 .traffic-light-outer {
     width: 100px;
     height: 100px;
@@ -126,4 +152,4 @@ select, input[type="text"] {
 .red-bg { background-color: var(--boo-red); box-shadow: 0 0 20px var(--boo-red); }
 
 .cta-area { margin-top: 30px; text-align: center; }
-.btn-link { background: none; border: none; color: var(--boo-light); text-decoration: underline; cursor: pointer; margin-left: 20px; }
+.btn-link { background: none; border: none; color: var(--boo-light); text-decoration: underline; cursor: pointer; margin-left: 20px; font-family: 'Source Sans Pro', sans-serif; }
