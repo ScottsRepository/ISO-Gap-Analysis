@@ -24,8 +24,8 @@ body {
 }
 
 .logo {
-    max-height: 80px; /* Constrains height to match standard header sizes */
-    max-width: 300px;  /* Constrains width so the long logo doesn't dominate the screen */
+    max-height: 80px;
+    max-width: 300px;
     height: auto;
     width: auto;
     margin-bottom: 15px;
@@ -58,6 +58,32 @@ h1, h2, h3 {
     color: var(--boo-dark);
     text-transform: uppercase;
     margin-top: 0;
+}
+
+.input-group {
+    margin: 25px 0 10px 0;
+    text-align: left;
+}
+
+.action-area {
+    margin-top: 30px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--boo-dark);
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Source Sans Pro', sans-serif;
+    box-sizing: border-box;
 }
 
 .btn-primary {
