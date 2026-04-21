@@ -101,7 +101,6 @@ function calculateResults() {
     document.getElementById('traffic-light-indicator').className = `light ${resultColor}`;
     document.getElementById('results-content').innerHTML = `<p>${text}</p>`;
     
-    // Updated Email logic
     const mailSubject = `ISO ${currentStandard} Gap Analysis Results`;
     const mailBody = `Hello Boo Consulting, I have completed the online gap analysis for ISO ${currentStandard}. My result was ${resultColor.split('-')[0].toUpperCase()}. I would like to discuss a roadmap.`;
     document.getElementById('email-link').href = `mailto:enquiries@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
