@@ -33,14 +33,16 @@
 
             <div id="ai-context" class="input-group hidden">
                 <label for="ai-model">Which AI models do you currently use?</label>
-                <select id="ai-model">
+                <select id="ai-model-select">
                     <option value="chatgpt">ChatGPT / OpenAI</option>
                     <option value="gemini">Google Gemini</option>
                     <option value="claude">Claude / Anthropic</option>
                     <option value="copilot">Microsoft Copilot</option>
                     <option value="custom">Custom / In-house LLM</option>
                 </select>
-                <input type="text" id="custom-ai" placeholder="If custom, please specify..." class="hidden">
+                <div id="custom-ai-container" class="hidden" style="margin-top: 10px;">
+                    <input type="text" id="custom-ai-input" placeholder="Please specify your custom LLM...">
+                </div>
             </div>
 
             <button id="start-btn" class="btn-primary">Begin Snapshot</button>
