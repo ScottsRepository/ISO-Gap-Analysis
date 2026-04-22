@@ -18,8 +18,13 @@
     <main class="container">
         <section id="setup-section" class="card">
             <h1>ISO Gap Analysis Tool</h1>
-            <p>Select a standard below to begin your high-level readiness snapshot.</p>
+            <p>Get a high-level snapshot of your readiness. To provide accurate context, please tell us a little about your business first.</p>
             
+            <div class="input-group">
+                <label for="business-context">Business Activity & Size:</label>
+                <input type="text" id="business-context" placeholder="e.g. 15-person Software Agency based in Manchester">
+            </div>
+
             <div class="input-group">
                 <label for="standard-select">Select ISO Standard:</label>
                 <select id="standard-select">
@@ -40,9 +45,6 @@
                     <option value="copilot">Microsoft Copilot</option>
                     <option value="custom">Custom / In-house LLM</option>
                 </select>
-                <div id="custom-ai-container" class="hidden" style="margin-top: 15px;">
-                    <input type="text" id="custom-ai-input" placeholder="Please specify your custom LLM...">
-                </div>
             </div>
 
             <div class="action-area">
@@ -57,9 +59,9 @@
             <h2 id="pillar-title">Section</h2>
             <p id="question-text"></p>
             <div class="answer-options">
-                <button onclick="handleAnswer(2)" class="btn-answer">Yes, fully in place</button>
-                <button onclick="handleAnswer(1)" class="btn-answer">Partially / In progress</button>
-                <button onclick="handleAnswer(0)" class="btn-answer">No, not yet</button>
+                <button onclick="handleAnswer(2)" class="btn-answer">Yes, fully implemented & reviewed</button>
+                <button onclick="handleAnswer(1)" class="btn-answer">Partially / Work in progress</button>
+                <button onclick="handleAnswer(0)" class="btn-answer">No, not yet addressed</button>
             </div>
         </section>
 
@@ -80,7 +82,7 @@
 
             <div id="summary-view" class="tab-content hidden">
                 <div class="disclaimer-box">
-                    <strong>Note:</strong> This Executive Summary is an outline based on your answers and is not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all <strong>controls and requirements</strong> are met.
+                    <strong>Note:</strong> This Executive Summary is an outline based on your answers and is not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all controls and requirements are met.
                 </div>
                 <div id="executive-summary-content" class="summary-box"></div>
             </div>
