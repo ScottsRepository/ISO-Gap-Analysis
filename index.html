@@ -79,8 +79,17 @@
             </div>
 
             <div class="cta-area">
-                <a id="email-link" href="#" class="btn-primary">Ask an Expert</a>
+                <a id="email-link" href="#" class="btn-primary" onclick="showExitScreen()">Ask an Expert</a>
                 <button onclick="location.reload()" class="btn-link">Restart Analysis</button>
+            </div>
+        </section>
+
+        <section id="exit-section" class="card hidden">
+            <h2>Thank You</h2>
+            <p>Your self-assessment summary has been prepared for our enquiries team.</p>
+            <p>By clicking the email link, your results have been sent to us. One of our consultants will be in touch shortly by replying directly to that email to discuss your professional roadmap.</p>
+            <div class="action-area" style="text-align:center;">
+                <button onclick="location.reload()" class="btn-primary">Start New Analysis</button>
             </div>
         </section>
     </main>
