@@ -147,6 +147,6 @@ function calculateResults() {
     document.getElementById('executive-summary-content').innerHTML = summaryHtml;
 
     const mailSubject = `ISO ${currentStandard} Gap Analysis Results`;
-    const mailBody = `Hello Boo Consulting,%0A%0A I have completed the gap analysis for ISO ${currentStandard}.%0A%0A${emailSummary}%0A*PLEASE NOTE: This is an outline based on user answers and not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure accuracy.*%0A%0A I would like to discuss a roadmap based on these findings.`;
+    const mailBody = `Hello Boo Consulting,%0A%0A I have completed the gap analysis for ISO ${currentStandard}.%0A%0A${emailSummary}%0A*PLEASE NOTE: This is an outline based on user answers and not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all controls and requirements are met.*%0A%0A I would like to discuss a roadmap based on these findings.`;
     document.getElementById('email-link').href = `mailto:enquiries@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${mailBody}`;
 }
