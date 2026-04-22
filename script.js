@@ -73,13 +73,12 @@ const standardSelect = document.getElementById('standard-select');
 const startBtn = document.getElementById('start-btn');
 const warningDiv = document.getElementById('standard-warning');
 
-// THE FIX: Listen for dropdown changes to show prerequisite warning
 standardSelect.addEventListener('change', function() {
     if (this.value === '27701') {
         warningDiv.innerHTML = `
             <div class="warning-box">
                 <strong>Auditor's Note: Prerequisite Required</strong>
-                ISO 27701 is an extension to ISO 27001. You cannot achieve certification for Privacy Information Management without a valid Information Security Management System (ISMS) already in place or being implemented simultaneously.
+                ISO 27701 is an extension to ISO 27001. You cannot achieve certification for Privacy Information Management without a valid ISMS already in place or being implemented simultaneously.
             </div>`;
         warningDiv.classList.remove('hidden');
     } else {
@@ -158,11 +157,10 @@ function calculateResults() {
 
     let summaryHtml = `<h3>Full Breakdown: ISO ${currentStandard}</h3>`;
     
-    // Privacy by Design: 27701 Summary Note
     if (currentStandard === "27701") {
         summaryHtml += `
             <div class="disclaimer-box" style="background:#e8f4fd; color:#0c5460; border-color:#bee5eb; margin-bottom: 20px; padding: 15px; border-radius: 4px;">
-                <strong>Prerequisite Requirement:</strong> This assessment assumes an existing ISO 27001 framework. Boo Consulting can help you implement both standards in tandem.
+                <strong>Prerequisite Requirement:</strong> This assessment assumes an existing ISO 27001 framework.
             </div>`;
     }
 
@@ -175,11 +173,13 @@ function calculateResults() {
         summaryHtml += `
             <div class="summary-item">
                 <h4>${q.c}: ${q.p}</h4>
+                <p><strong>Question:</strong> ${q.q}</p>
                 <p><strong>Result:</strong> ${status}</p>
                 <div class="insight-note"><strong>How Boo Consulting Will Help You:</strong> ${q.r}</div>
             </div>
         `;
-        emailSummary += `- ${q.c} (${q.p}): ${status}%0A`;
+        // Now adding the question text to the email body
+        emailSummary += `%0A${q.c} (${q.p})%0AQuestion: ${q.q}%0AResult: ${status}%0A`;
     });
 
     document.getElementById('executive-summary-content').innerHTML = summaryHtml;
