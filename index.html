@@ -18,7 +18,7 @@
     <main class="container">
         <section id="setup-section" class="card">
             <h1>ISO Gap Analysis Tool</h1>
-            <p>Our gap analysis tool provides a snapshot of your current compliance status. Select a standard below to begin.</p>
+            <p>Select a standard below to begin your high-level readiness snapshot.</p>
             
             <div class="input-group">
                 <label for="standard-select">Select ISO Standard:</label>
@@ -65,12 +65,28 @@
 
         <section id="results-section" class="card hidden">
             <h2>Your Results Summary</h2>
-            <div class="traffic-light-outer">
-                <div id="traffic-light-indicator" class="light"></div>
+            
+            <div class="tabs">
+                <button id="tab-snapshot" class="tab-btn active" onclick="switchTab('snapshot')">Visual Snapshot</button>
+                <button id="tab-summary" class="tab-btn" onclick="switchTab('summary')">Executive Summary</button>
             </div>
-            <div id="results-content"></div>
+
+            <div id="snapshot-view" class="tab-content">
+                <div class="traffic-light-outer">
+                    <div id="traffic-light-indicator" class="light"></div>
+                </div>
+                <div id="snapshot-text"></div>
+            </div>
+
+            <div id="summary-view" class="tab-content hidden">
+                <div class="disclaimer-box">
+                    <strong>Note:</strong> This Executive Summary is an outline based on your answers and is not a formal audit report. A full Gap Analysis by a qualified individual is required to verify all checks and balances.
+                </div>
+                <div id="executive-summary-content" class="summary-box"></div>
+            </div>
+
             <div class="cta-area">
-                <a id="email-link" href="#" class="btn-primary">Request Detailed Roadmap</a>
+                <a id="email-link" href="#" class="btn-primary">Ask an Expert</a>
                 <button onclick="location.reload()" class="btn-link">Restart Analysis</button>
             </div>
         </section>
