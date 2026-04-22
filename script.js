@@ -60,7 +60,7 @@ const questionBank = {
         { c: "Annex B.8", p: "Incident Response", q: "Do you have a plan to handle AI hallucinations or failures?", r: "We help you prepare for AI-specific technical and ethical incidents." }
     ]
 };
-
+ 
 let currentStandard = "";
 let currentStep = 0;
 let scores = [];
