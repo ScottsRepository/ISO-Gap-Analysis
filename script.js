@@ -51,4 +51,115 @@ const questionBank = {
         { c: "Clause 4.1", p: "Management System", q: "Have you established an AI Management System addressing ethical use?", critical: true, r: "Boo is at the forefront of AI governance and ethical frameworking." },
         { c: "Clause 5.1", p: "Leadership", q: "Does management provide clear direction on responsible AI deployment?", critical: true, r: "We offer AI strategy sessions for senior leadership." },
         { c: "Clause 6.1", p: "Risk Strategy", q: "Have you assessed potential bias or ethical harm in your AI systems?", critical: true, r: "Boo Consulting can lead your AI Ethics and Bias assessments." },
-        { c: "Clause
+        { c: "Clause 7.2", p: "Support", q: "Are staff who use AI tools trained on the risks and ethical implications?", r: "We provide specialized AI risk awareness training for employees." },
+        { c: "Clause 9.1", p: "Performance", q: "Do you monitor AI performance to ensure it remains accurate over time?", r: "Boo helps you set up AI monitoring and evaluation logs." },
+        { c: "Annex B", p: "Operational Controls", q: "Do you maintain a full inventory of every AI system used?", r: "We provide AI Inventory templates to track model lineage and use." },
+        { c: "Annex B.7", p: "Data Integrity", q: "Are there strict controls over the quality/source of data used for AI?", r: "Boo helps audit your AI data pipelines for security and quality." },
+        { c: "Annex B.9", p: "Human Oversight", q: "Is there a clear mechanism for a human to review and override AI outputs?", r: "We design human-in-the-loop workflows to maintain control." },
+        { c: "Annex B.10", p: "Transparency", q: "Do you inform users when they are interacting with an AI system?", r: "Boo assists in building transparent AI disclosure policies." },
+        { c: "Annex B.8", p: "Incident Response", q: "Do you have a plan to handle AI hallucinations or failures?", r: "We help you prepare for AI-specific technical and ethical incidents." }
+    ]
+};
+
+let currentStandard = "";
+let currentStep = 0;
+let scores = [];
+let businessContext = "";
+
+const setupSection = document.getElementById('setup-section');
+const quizSection = document.getElementById('quiz-section');
+const resultsSection = document.getElementById('results-section');
+const standardSelect = document.getElementById('standard-select');
+const startBtn = document.getElementById('start-btn');
+
+startBtn.addEventListener('click', () => {
+    businessContext = document.getElementById('business-context').value;
+    if (!businessContext) {
+        alert("Please provide a little business context to help us tailor the results.");
+        return;
+    }
+    currentStandard = standardSelect.value;
+    setupSection.classList.add('hidden');
+    quizSection.classList.remove('hidden');
+    showQuestion();
+});
+
+function showQuestion() {
+    const questions = questionBank[currentStandard];
+    const q = questions[currentStep];
+    document.getElementById('pillar-title').innerText = q.p;
+    document.getElementById('question-text').innerText = q.q;
+    const progress = (currentStep / questions.length) * 100;
+    document.getElementById('progress-bar').style.width = progress + "%";
+}
+
+function handleAnswer(score) {
+    scores.push(score);
+    if (currentStep < questionBank[currentStandard].length - 1) {
+        currentStep++;
+        showQuestion();
+    } else {
+        calculateResults();
+    }
+}
+
+function switchTab(view) {
+    document.getElementById('snapshot-view').classList.toggle('hidden', view !== 'snapshot');
+    document.getElementById('summary-view').classList.toggle('hidden', view !== 'summary');
+    document.getElementById('tab-snapshot').classList.toggle('active', view === 'snapshot');
+    document.getElementById('tab-summary').classList.toggle('active', view === 'summary');
+}
+
+function calculateResults() {
+    quizSection.classList.add('hidden');
+    resultsSection.classList.remove('hidden');
+    
+    let totalScore = 0;
+    let maxPossible = 0;
+    const questions = questionBank[currentStandard];
+
+    questions.forEach((q, i) => {
+        const weight = q.critical ? 2.5 : 1;
+        totalScore += (scores[i] * weight);
+        maxPossible += (2 * weight);
+    });
+
+    const ratio = totalScore / maxPossible;
+    let color = "red-bg";
+    let statusText = "<strong>Status: Red.</strong> Significant gaps identified. High-priority development of management strategy and formal evidence is required.";
+    
+    if (ratio > 0.8) { 
+        color = "green-bg"; 
+        statusText = "<strong>Status: Green.</strong> Strong foundations identified. You appear ready for professional verification and a formal gap analysis."; 
+    }
+    else if (ratio > 0.45) { 
+        color = "amber-bg"; 
+        statusText = "<strong>Status: Amber.</strong> Progress noted, however, critical gaps in formal documentation or management strategy remain."; 
+    }
+
+    document.getElementById('traffic-light-indicator').className = `light ${color}`;
+    document.getElementById('snapshot-text').innerHTML = `<p>${statusText}</p>`;
+
+    let summaryHtml = `<h3>Full Breakdown: ISO ${currentStandard}</h3>`;
+    let emailSummary = `Context: ${businessContext}%0A%0ASummary for ISO ${currentStandard}:%0A`;
+
+    questions.forEach((q, index) => {
+        const score = scores[index];
+        const status = score === 2 ? "✓ Strong" : score === 1 ? "⚠ Partial" : "✗ Gap";
+        
+        summaryHtml += `
+            <div class="summary-item">
+                <h4>${q.c}: ${q.p}</h4>
+                <p><strong>Result:</strong> ${status}</p>
+                <div class="insight-note"><strong>How Boo Helps:</strong> ${q.r}</div>
+            </div>
+        `;
+        emailSummary += `- ${q.c} (${q.p}): ${status}%0A`;
+    });
+
+    document.getElementById('executive-summary-content').innerHTML = summaryHtml;
+
+    const mailSubject = `ISO Gap Analysis: ${businessContext}`;
+    const mailBody = `Hello Boo Consulting,%0A%0AI have completed a self-assessment for ISO ${currentStandard}.%0A%0A${emailSummary}%0A*NOTE: This is a high-level outline for discussion, not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all controls and requirements are met.*%0A%0APlease contact me to discuss a professional roadmap.`;
+    document.getElementById('email-link').href = `mailto:enquiries@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${mailBody}`;
+}
