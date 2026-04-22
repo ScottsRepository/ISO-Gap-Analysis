@@ -1,8 +1,8 @@
 const questionBank = {
     "9001": [
-        { p: "Management System", q: "Have you identified the 'interested parties' whose needs impact your quality goals?" },
-        { p: "Leadership", q: "Does senior management actively promote a culture of quality and provide required resources?" },
-        { p: "Planning", q: "Do you have measurable quality objectives aligned with your business strategy?" },
+        { p: "Management System", q: "Have you identified the 'interested parties' whose needs impact your quality goals?", critical: true },
+        { p: "Leadership", q: "Does senior management actively promote a culture of quality and provide required resources?", critical: true },
+        { p: "Planning", q: "Do you have measurable quality objectives aligned with your business strategy?", critical: true },
         { p: "Support", q: "Is there a formal process to ensure employees have required training for their roles?" },
         { p: "Performance", q: "Do you regularly perform internal audits to ensure quality processes work as intended?" },
         { p: "Operational Controls", q: "Do you have clear procedures for checking services/products meet requirements before delivery?" },
@@ -12,9 +12,9 @@ const questionBank = {
         { p: "Improvement", q: "When a mistake occurs, is there a process to identify the root cause?" }
     ],
     "27001": [
-        { p: "Management System", q: "Do you have a defined 'Scope' stating which parts of your business are covered by security rules?" },
-        { p: "Leadership", q: "Does senior management regularly review security performance and provide budget?" },
-        { p: "Risk Strategy", q: "Do you have a formal 'Risk Treatment Plan' explaining how you handle cyber threats?" },
+        { p: "Management System", q: "Do you have a defined 'Scope' stating which parts of your business are covered by security rules?", critical: true },
+        { p: "Leadership", q: "Does senior management regularly review security performance and provide budget?", critical: true },
+        { p: "Risk Strategy", q: "Do you have a formal 'Risk Treatment Plan' explaining how you handle cyber threats?", critical: true },
         { p: "Support", q: "Do you provide regular security awareness training to all staff?" },
         { p: "Performance", q: "Do you conduct internal audits to check if security rules are followed?" },
         { p: "Operational Controls", q: "Do you maintain a central inventory of all hardware and software used?" },
@@ -24,9 +24,9 @@ const questionBank = {
         { p: "Business Continuity", q: "Do you have a plan to keep critical security operations running during system failure?" }
     ],
     "27701": [
-        { p: "Management System", q: "Have you updated your Security Scope to specifically include personal data protection?" },
-        { p: "Leadership", q: "Is there a designated person responsible for overseeing privacy compliance?" },
-        { p: "Risk Strategy", q: "Have you conducted a Privacy Impact Assessment for processes involving sensitive data?" },
+        { p: "Management System", q: "Have you updated your Security Scope to specifically include personal data protection?", critical: true },
+        { p: "Leadership", q: "Is there a designated person responsible for overseeing privacy compliance?", critical: true },
+        { p: "Risk Strategy", q: "Have you conducted a Privacy Impact Assessment for processes involving sensitive data?", critical: true },
         { p: "Support", q: "Does staff training specifically cover how to handle and protect PII?" },
         { p: "Performance", q: "Are privacy controls included in your regular internal audit cycle?" },
         { p: "Operational Controls", q: "Do you know exactly what personal data you hold and who has access to it?" },
@@ -36,9 +36,9 @@ const questionBank = {
         { p: "Transparency", q: "Is your privacy notice clear, up-to-date, and easily accessible?" }
     ],
     "14001": [
-        { p: "Management System", q: "Have you identified environmental aspects you can actually control or influence?" },
-        { p: "Leadership", q: "Is there a signed environmental policy demonstrating management commitment?" },
-        { p: "Planning", q: "Do you have a process to stay updated on industry-specific environmental laws?" },
+        { p: "Management System", q: "Have you identified environmental aspects you can actually control or influence?", critical: true },
+        { p: "Leadership", q: "Is there a signed environmental policy demonstrating management commitment?", critical: true },
+        { p: "Planning", q: "Do you have a process to stay updated on industry-specific environmental laws?", critical: true },
         { p: "Support", q: "Are employees aware of how their work activities can impact the environment?" },
         { p: "Performance", q: "Do you track environmental performance against stated goals?" },
         { p: "Operational Controls", q: "Do you have written procedures to manage waste and energy use?" },
@@ -48,9 +48,9 @@ const questionBank = {
         { p: "Improvement", q: "Do you investigate environmental near-misses to prevent them recurring?" }
     ],
     "42001": [
-        { p: "Management System", q: "Have you established an AI Management System addressing ethical use?" },
-        { p: "Leadership", q: "Does management provide clear direction on responsible AI deployment?" },
-        { p: "Risk Strategy", q: "Have you assessed potential bias or ethical harm in your AI systems?" },
+        { p: "Management System", q: "Have you established an AI Management System addressing ethical use?", critical: true },
+        { p: "Leadership", q: "Does management provide clear direction on responsible AI deployment?", critical: true },
+        { p: "Risk Strategy", q: "Have you assessed potential bias or ethical harm in your AI systems?", critical: true },
         { p: "Support", q: "Are staff who use AI tools trained on the risks and ethical implications?" },
         { p: "Performance", q: "Do you monitor AI performance to ensure it remains accurate over time?" },
         { p: "Operational Controls", q: "Do you maintain a full inventory of every AI system used?" },
@@ -64,28 +64,20 @@ const questionBank = {
 let currentStandard = "";
 let currentStep = 0;
 let scores = [];
+let businessContext = "";
 
 const setupSection = document.getElementById('setup-section');
 const quizSection = document.getElementById('quiz-section');
 const resultsSection = document.getElementById('results-section');
 const standardSelect = document.getElementById('standard-select');
-const aiModelSelect = document.getElementById('ai-model-select');
-
-standardSelect.addEventListener('change', (e) => {
-    const aiContext = document.getElementById('ai-context');
-    aiContext.classList.toggle('hidden', e.target.value !== '42001');
-});
-
-aiModelSelect.addEventListener('change', (e) => {
-    const customContainer = document.getElementById('custom-ai-container');
-    customContainer.classList.toggle('hidden', e.target.value !== 'custom');
-});
 
 document.getElementById('start-btn').addEventListener('click', () => {
-    currentStandard = standardSelect.value;
-    if (currentStandard === "27701") {
-        alert("Note: ISO 27701 is an extension. You must have ISO 27001 in place.");
+    businessContext = document.getElementById('business-context').value;
+    if (!businessContext) {
+        alert("Please provide a little business context to help us tailor the results.");
+        return;
     }
+    currentStandard = standardSelect.value;
     setupSection.classList.add('hidden');
     quizSection.classList.remove('hidden');
     showQuestion();
@@ -120,33 +112,41 @@ function switchTab(view) {
 function calculateResults() {
     quizSection.classList.add('hidden');
     resultsSection.classList.remove('hidden');
-    const total = scores.reduce((a, b) => a + b, 0);
-    const max = scores.length * 2;
-    const ratio = total / max;
+    
+    let totalScore = 0;
+    let maxPossible = 0;
     const questions = questionBank[currentStandard];
 
+    questions.forEach((q, i) => {
+        const weight = q.critical ? 2 : 1; // Auditor Weighting
+        totalScore += (scores[i] * weight);
+        maxPossible += (2 * weight);
+    });
+
+    const ratio = totalScore / maxPossible;
     let color = "red-bg";
-    let statusText = "Status: Red. Heavy investment in documentation and culture is required.";
-    if (ratio > 0.8) { color = "green-bg"; statusText = "Status: Green. You are likely audit-ready."; }
-    else if (ratio > 0.4) { color = "amber-bg"; statusText = "Status: Amber. Foundations exist, but gaps remain."; }
+    let statusText = "Status: Red. High risk identified. Fundamental management controls are missing.";
+    
+    if (ratio > 0.8) { color = "green-bg"; statusText = "Status: Green. Strong foundations. Ready for professional verification."; }
+    else if (ratio > 0.45) { color = "amber-bg"; statusText = "Status: Amber. Progress made, but critical gaps in evidence exist."; }
 
     document.getElementById('traffic-light-indicator').className = `light ${color}`;
     document.getElementById('snapshot-text').innerHTML = `<p><strong>${statusText}</strong></p>`;
 
-    let summaryHtml = `<h3>Breakdown for ISO ${currentStandard}</h3><p>Based on your answers, here is the executive overview:</p><ul>`;
-    let emailSummary = `Summary for ISO ${currentStandard}: %0A`;
+    let summaryHtml = `<h3>Context: ${businessContext}</h3><ul>`;
+    let emailSummary = `Context: ${businessContext}%0A%0ASummary for ISO ${currentStandard}:%0A`;
 
     questions.forEach((q, index) => {
         const score = scores[index];
         const status = score === 2 ? "✓ Strong" : score === 1 ? "⚠ Partial" : "✗ Gap";
-        summaryHtml += `<li><strong>${q.p}:</strong> ${status} - ${q.q}</li>`;
+        summaryHtml += `<li><strong>${q.p}:</strong> ${status}</li>`;
         emailSummary += `- ${q.p}: ${status}%0A`;
     });
     summaryHtml += `</ul>`;
 
     document.getElementById('executive-summary-content').innerHTML = summaryHtml;
 
-    const mailSubject = `ISO ${currentStandard} Gap Analysis Results`;
-    const mailBody = `Hello Boo Consulting,%0A%0A I have completed the gap analysis for ISO ${currentStandard}.%0A%0A${emailSummary}%0A*PLEASE NOTE: This is an outline based on user answers and not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all controls and requirements are met.*%0A%0A I would like to discuss a roadmap based on these findings.`;
+    const mailSubject = `ISO Gap Analysis: ${businessContext}`;
+    const mailBody = `Hello Boo Consulting,%0A%0AI have completed a self-assessment for ISO ${currentStandard}.%0A%0A${emailSummary}%0A*NOTE: This is a high-level outline for discussion, not a formal audit.*%0A%0APlease contact me to discuss a professional roadmap.`;
     document.getElementById('email-link').href = `mailto:enquiries@booconsulting.co.uk?subject=${encodeURIComponent(mailSubject)}&body=${mailBody}`;
 }
