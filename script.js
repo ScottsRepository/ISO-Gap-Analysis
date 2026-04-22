@@ -178,7 +178,6 @@ function calculateResults() {
                 <div class="insight-note"><strong>How Boo Consulting Will Help You:</strong> ${q.r}</div>
             </div>
         `;
-        // Now adding the question text to the email body
         emailSummary += `%0A${q.c} (${q.p})%0AQuestion: ${q.q}%0AResult: ${status}%0A`;
     });
 
