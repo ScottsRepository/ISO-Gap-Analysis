@@ -7,7 +7,7 @@
     --boo-green: #70ad47;
     --boo-yellow: #ffd477;
     --boo-red: #e74c3c;
-} 
+}
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
@@ -107,11 +107,6 @@ h1, h2, h3 {
     margin: 0 0 5px 0;
     color: var(--boo-dark);
     font-size: 1rem;
-}
-
-.summary-item p {
-    margin: 5px 0;
-    font-size: 0.9rem;
 }
 
 .insight-note {
