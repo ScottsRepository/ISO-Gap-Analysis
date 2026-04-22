@@ -14,12 +14,14 @@
             <div class="tagline">Your Compliance Journey Starts Here</div>
         </div>
     </header>
- 
+
     <main class="container">
         <section id="setup-section" class="card">
             <h1>ISO Gap Analysis Tool</h1>
             <p>Get a high-level snapshot of your readiness. To provide accurate context, please tell us a little about your business first.</p>
             
+            <div id="standard-warning" class="hidden"></div>
+
             <div class="input-group">
                 <label for="business-context">Business Activity & Size:</label>
                 <input type="text" id="business-context" placeholder="e.g. 15-person Software Agency based in Manchester">
@@ -70,9 +72,6 @@
             </div>
 
             <div id="summary-view" class="tab-content hidden">
-                <div class="disclaimer-box">
-                    <strong>Note:</strong> This Executive Summary is an outline based on your answers and is not a formal audit report. A full Gap Analysis by a qualified individual is required to ensure all controls and requirements are met.
-                </div>
                 <div id="executive-summary-content"></div>
             </div>
 
