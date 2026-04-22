@@ -27,7 +27,7 @@ const questionBank = {
         { c: "Clause 5.2", p: "Management System", q: "Have you updated your Security Scope to specifically include personal data protection?", critical: true, r: "Boo Consulting integrates privacy requirements into your existing ISO 27001 scope." },
         { c: "Clause 5.3", p: "Leadership", q: "Is there a designated person responsible for overseeing privacy compliance?", critical: true, r: "We provide DPOaaS to fill this critical role." },
         { c: "Clause 5.4", p: "Risk Strategy", q: "Have you conducted a Privacy Impact Assessment for processes involving sensitive data?", critical: true, r: "Boo Consulting can facilitate your DPIA/PIA processes." },
-        { c: "Clause 5.5", p: "Support", q: "Does staff training specifically cover how to handle and protect PII?", critical: true, r: "We provide specialized GDPR and PII handling awareness sessions." },
+        { c: "Clause 5.5", p: "Support", q: "Does staff training specifically cover how to handle and protect PII?", r: "We provide specialized GDPR and PII handling awareness sessions." },
         { c: "Clause 5.8", p: "Performance", q: "Are privacy controls included in your regular internal audit cycle?", r: "Boo Consulting can audit your PIMS alongside your ISMS." },
         { c: "Clause 6.3", p: "Operational Controls", q: "Do you know exactly what personal data you hold and who has access to it?", r: "We specialize in Data Mapping and Record of Processing (RoPA) development." },
         { c: "Clause 6.4", p: "Privacy by Design", q: "Do you formally consider privacy requirements when implementing new systems?", r: "Boo Consulting can help embed privacy into your project management lifecycle." },
@@ -39,7 +39,7 @@ const questionBank = {
         { c: "Clause 4.1", p: "Management System", q: "Have you identified environmental aspects you can actually control or influence?", critical: true, r: "Boo Consulting helps you identify and score your environmental impacts." },
         { c: "Clause 5.2", p: "Leadership", q: "Is there a signed environmental policy demonstrating management commitment?", critical: true, r: "We help draft meaningful policies that go beyond lip service." },
         { c: "Clause 6.1", p: "Planning", q: "Do you have a process to stay updated on industry-specific environmental laws?", critical: true, r: "Boo Consulting provides Legal Registers tailored to your industry." },
-        { c: "Clause 7.3", p: "Support", q: "Are employees aware of how their work activities can impact the environment?", critical: true, r: "We provide environmental awareness training for your entire team." },
+        { c: "Clause 7.3", p: "Support", q: "Are employees aware of how their work activities can impact the environment?", r: "We provide environmental awareness training for your entire team." },
         { c: "Clause 9.1", p: "Performance", q: "Do you track environmental performance against stated goals?", r: "Boo Consulting helps design tracking dashboards for carbon and waste." },
         { c: "Clause 8.1", p: "Operational Controls", q: "Do you have written procedures to manage waste and energy use?", r: "We build practical operational controls to reduce your footprint." },
         { c: "Clause 8.2", p: "Emergency Readiness", q: "Do you have a plan to respond to environmental accidents like spills?", r: "Boo Consulting can help draft and test your Spill Response and Emergency plans." },
@@ -51,7 +51,7 @@ const questionBank = {
         { c: "Clause 4.1", p: "Management System", q: "Have you established an AI Management System addressing ethical use?", critical: true, r: "Boo Consulting is at the forefront of AI governance and ethical frameworking." },
         { c: "Clause 5.1", p: "Leadership", q: "Does management provide clear direction on responsible AI deployment?", critical: true, r: "We offer AI strategy sessions for senior leadership." },
         { c: "Clause 6.1", p: "Risk Strategy", q: "Have you assessed potential bias or ethical harm in your AI systems?", critical: true, r: "Boo Consulting can lead your AI Ethics and Bias assessments." },
-        { c: "Clause 7.2", p: "Support", q: "Are staff who use AI tools trained on the risks and ethical implications?", critical: true, r: "We provide specialized AI risk awareness training for employees." },
+        { c: "Clause 7.2", p: "Support", q: "Are staff who use AI tools trained on the risks and ethical implications?", r: "We provide specialized AI risk awareness training for employees." },
         { c: "Clause 9.1", p: "Performance", q: "Do you monitor AI performance to ensure it remains accurate over time?", r: "Boo Consulting helps you set up AI monitoring and evaluation logs." },
         { c: "Annex B", p: "Operational Controls", q: "Do you maintain a full inventory of every AI system used?", r: "We provide AI Inventory templates to track model lineage and use." },
         { c: "Annex B.7", p: "Data Integrity", q: "Are there strict controls over the quality/source of data used for AI?", r: "Boo Consulting helps audit your AI data pipelines for security and quality." },
@@ -69,6 +69,7 @@ let businessContext = "";
 const setupSection = document.getElementById('setup-section');
 const quizSection = document.getElementById('quiz-section');
 const resultsSection = document.getElementById('results-section');
+const exitSection = document.getElementById('exit-section');
 const standardSelect = document.getElementById('standard-select');
 const startBtn = document.getElementById('start-btn');
 const warningDiv = document.getElementById('standard-warning');
@@ -123,6 +124,11 @@ function switchTab(view) {
     document.getElementById('summary-view').classList.toggle('hidden', view !== 'summary');
     document.getElementById('tab-snapshot').classList.toggle('active', view === 'snapshot');
     document.getElementById('tab-summary').classList.toggle('active', view === 'summary');
+}
+
+function showExitScreen() {
+    resultsSection.classList.add('hidden');
+    exitSection.classList.remove('hidden');
 }
 
 function calculateResults() {
