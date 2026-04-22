@@ -94,13 +94,34 @@ h1, h2, h3 {
     border-radius: 4px;
 }
 
-.summary-box {
+.summary-item {
     text-align: left;
-    padding: 20px;
+    padding: 15px;
     background: #f8f9fa;
     border-left: 4px solid var(--boo-teal);
-    font-size: 0.95rem;
-    line-height: 1.6;
+    margin-bottom: 10px;
+    border-radius: 0 4px 4px 0;
+}
+
+.summary-item h4 {
+    margin: 0 0 5px 0;
+    color: var(--boo-dark);
+    font-size: 1rem;
+}
+
+.summary-item p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.insight-note {
+    background: #e6f4f4;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--boo-teal);
+    font-style: italic;
 }
 
 .input-group {
@@ -117,7 +138,6 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--boo-dark);
 }
 
 select, input[type="text"] {
@@ -125,7 +145,6 @@ select, input[type="text"] {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-family: 'Source Sans Pro', sans-serif;
     box-sizing: border-box;
 }
 
@@ -163,7 +182,6 @@ select, input[type="text"] {
 
 .btn-answer:hover {
     border-color: var(--boo-orange);
-    background: #fffcf5;
 }
 
 .progress-container {
